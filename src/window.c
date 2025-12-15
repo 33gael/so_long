@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gaeducas <gaeducas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/14 00:43:45 by gaeducas            #+#    #+#             */
-/*   Updated: 2025/12/14 00:44:53 by gaeducas           ###   ########.fr       */
+/*   Created: 2025/12/15 05:01:50 by gaeducas            #+#    #+#             */
+/*   Updated: 2025/12/15 12:48:46 by gaeducas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../includes/so_long.h"
 
-# include "../includes/libft/libft.h"
+int	main(void)
+{
+	mlx_context mlx = mlx_init();
 
-#endif
+	mlx_window_create_info info = {0};
+	info.title = "Hello World!";
+	info.width = 400;
+	info.height = 400;
+	mlx_window win = mlx_new_window(mlx, &info);
+	mlx_loop(mlx);
+	sleep(100);
+	mlx_destroy_window(mlx, win);
+    mlx_destroy_context(mlx);
+}
