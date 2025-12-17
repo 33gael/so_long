@@ -17,7 +17,9 @@ MLX_HEADERS_DIR = $(MLX_DIR)includes/  # Nouveau : Chemin vers les headers MLX
 
 ## SOURCES ET OBJETS PRINCIPAUX
 # Liste des fichiers sources du projet so_long
-SRCS = $(SRCS_FOLDER)window.c
+SRCS = $(SRCS_FOLDER)window.c \
+		$(SRCS_FOLDER)main.c \
+		
 SRCS_OBJS = $(addprefix $(OBJECTS_FOLDER),$(notdir $(SRCS:.c=.o)))
 
 ## RÈGLE PRINCIPALE
