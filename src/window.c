@@ -3,32 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 05:01:50 by gaeducas          #+#    #+#             */
-/*   Updated: 2025/12/15 12:48:46 by gaeducas         ###   ########.fr       */
+/*   Updated: 2025/12/18 00:00:00 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	main(void)
-{
-	mlx_context mlx = mlx_init();
-
-	mlx_window_create_info info = {0};
-	info.title = "Hello World!";
-	info.width = 400;
-	info.height = 400;
-	mlx_window win = mlx_new_window(mlx, &info);
-	mlx_loop(mlx);
-	sleep(100);
-	mlx_destroy_window(mlx, win);
-    mlx_destroy_context(mlx);
-}
-
 void	key_hook(int key, void *param)
 {
 	if (key == 41)
 		mlx_loop_end((mlx_context)param);
+}
+
+void	window_hook(int event, void *param)
+{
+	if (event == 0)
+		mlx_loop_end((mlx_context)param);
+}
+
+int	main(void)
+{
+	mlx_context				mlx;
+	mlx_window_create_info	info;
+	mlx_window				win;
+
+	mlx = mlx_init();
+	info.title = "Hello World!";
+	info.width = 400;
+	info.height = 400;
+	win = mlx_new_window(mlx, &info);
+	mlx_on_event(mlx, win, MLX_KEYDOWN, key_hook, mlx);
+	mlx_on_event(mlx, win, MLX_WINDOW_EVENT, window_hook, mlx);
+	mlx_loop(mlx);
+	mlx_destroy_window(mlx, win);
+	mlx_destroy_context(mlx);
 }
