@@ -6,7 +6,7 @@
 /*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 05:01:50 by gaeducas          #+#    #+#             */
-/*   Updated: 2025/12/18 00:00:00 by zaak             ###   ########.fr       */
+/*   Updated: 2025/12/20 12:48:48 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(void)
 
 	mlx = mlx_init();
 	info.title = "Hello World!";
-	info.width = 400;
-	info.height = 400;
+	info.width = 1080;
+	info.height = 860;
 	win = mlx_new_window(mlx, &info);
 	mlx_on_event(mlx, win, MLX_KEYDOWN, key_hook, mlx);
 	mlx_on_event(mlx, win, MLX_WINDOW_EVENT, window_hook, mlx);
