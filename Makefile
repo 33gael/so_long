@@ -1,79 +1,85 @@
 ## VARIABLES GÉNÉRALES
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-NAME = so_long
-RM = rm -rf
+CC              = cc
+CFLAGS          = -Wall -Wextra -Werror
+NAME            = so_long
+RM              = rm -rf
 
 ## CHEMINS
-SRCS_FOLDER = src/
-LIBS_FOLDER = libs/
+SRCS_FOLDER     = src/
+LIBS_FOLDER     = libs/
 INCLUDES_FOLDER = includes/
-OBJECTS_FOLDER = objects/
+OBJECTS_FOLDER  = objects/
 
 ## SOUS-PROJETS (BIBLIOTHÈQUES)
-MLX_DIR = $(LIBS_FOLDER)MacroLibX/
-LIBFT_DIR = $(LIBS_FOLDER)libft/
-MLX_HEADERS_DIR = $(MLX_DIR)includes/  # Nouveau : Chemin vers les headers MLX
+MLX_DIR         = $(LIBS_FOLDER)MacroLibX/
+LIBFT_DIR       = $(LIBS_FOLDER)libft/
+FT_PRINTF_DIR	= $(LIBS_FOLDER)ft_printf/
+MLX_HEADERS_DIR = $(MLX_DIR)includes/
 
-## SOURCES ET OBJETS PRINCIPAUX
-# Liste des fichiers sources du projet so_long
-SRCS = $(SRCS_FOLDER)window.c \
-		$(SRCS_FOLDER)main.c \
-		
-SRCS_OBJS = $(addprefix $(OBJECTS_FOLDER),$(notdir $(SRCS:.c=.o)))
+# Fichiers compilés des bibliothèques [cite: 1, 2]
+LIBFT           = $(LIBFT_DIR)libft.a
+FT_PRINTF		= $(FT_PRINTF_DIR)libftprintf.a
+MLX             = $(MLX_DIR)libmlx.so
 
-## RÈGLE PRINCIPALE
+## SOURCES ET OBJETS
+# Ajoute ici tes nouveaux fichiers .c au fur et à mesure
+SRCS            = $(SRCS_FOLDER)window.c \
+                  $(SRCS_FOLDER)so_long.c
+
+# Transformation des chemins pour les objets [cite: 1]
+OBJS            = $(patsubst $(SRCS_FOLDER)%.c, $(OBJECTS_FOLDER)%.o, $(SRCS))
+
+## RÈGLES PRINCIPALES
 all: $(NAME)
 
-## 1. RÈGLE DE LIEN FINAL
-$(NAME): $(SRCS_OBJS) $(LIBFT_DIR)libft.a $(MLX_DIR)libmlx.so
+# 1. LIEN FINAL (Correction : Ajout de FT_PRINTF et ordre des libs) 
+$(NAME): $(LIBFT) $(FT_PRINTF) $(MLX) $(OBJS)
 	@echo "Linking $(NAME)..."
-	$(CC) $(CFLAGS) $^ -lSDL2 -lm -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX) -lSDL2 -lm -o $(NAME)
 
-## 2. RÈGLE DE COMPILATION DES OBJETS PRINCIPAUX
-# Dépend du dossier MLX pour s'assurer que les en-têtes sont clonés
-$(OBJECTS_FOLDER)%.o: $(SRCS_FOLDER)%.c | $(MLX_DIR)
-	@mkdir -p $(dir $@)
-    # Ajout de -I $(MLX_HEADERS_DIR) ici
-	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) -I $(MLX_HEADERS_DIR) -c $< -o $@
+# 2. COMPILATION DES OBJETS (Correction : Ajout des -I pour les headers) 
+$(OBJECTS_FOLDER)%.o: $(SRCS_FOLDER)%.c | $(OBJECTS_FOLDER)
+	@echo "Compiling $<..."
+	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) -I $(MLX_HEADERS_DIR) -I $(LIBFT_DIR) -I $(FT_PRINTF_DIR) -c $< -o $@
 
-## 3. RÈGLES DES SOUS-PROJETS
+# Création du dossier d'objets si inexistant 
+$(OBJECTS_FOLDER):
+	@mkdir -p $(OBJECTS_FOLDER)
 
-# --- Libft ---
-$(LIBFT_DIR)libft.a:
+## 3. RÈGLES DES BIBLIOTHÈQUES
+
+$(LIBFT):
 	@echo "Compiling Libft..."
-	make -C $(LIBFT_DIR) all
+	@make -C $(LIBFT_DIR) all
 
-# --- MacroLibX Clone (Dépendance pour les .o) ---
-# Règle pour créer le dossier MLX et cloner le repo
+$(FT_PRINTF):
+	@echo "Compiling Ft_printf..."
+	@make -C $(FT_PRINTF_DIR) all
+
 $(MLX_DIR):
-	@echo "Cloning MacroLibX..."
-	git clone https://github.com/seekrs/MacroLibX.git $(MLX_DIR)
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "Cloning MacroLibX..."; \
+		git clone https://github.com/seekrs/MacroLibX.git $(MLX_DIR); \
+	fi
 
-# --- MacroLibX Compile (Dépendance pour le Link) ---
-# La bibliothèque libmlx.so dépend du dossier MLX (pour s'assurer qu'il est cloné)
-$(MLX_DIR)libmlx.so: $(MLX_DIR)
+$(MLX): $(MLX_DIR)
 	@echo "Compiling MacroLibX..."
-	make -C $(MLX_DIR) -j
+	@make -C $(MLX_DIR) -j
 
-## RÈGLES DE NETTOYAGE
+## NETTOYAGE
 clean:
 	@echo "Cleaning objects..."
 	$(RM) $(OBJECTS_FOLDER)
-	@echo "Cleaning Libft objects..."
-	make -C $(LIBFT_DIR) clean || true
-	@echo "Cleaning MacroLibX objects..."
-	make -C $(MLX_DIR) clean || true
+	@make -C $(LIBFT_DIR) clean || true
+	@make -C $(FT_PRINTF_DIR) clean || true
+	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean || true; fi
 
 fclean: clean
 	@echo "Full cleaning..."
 	$(RM) $(NAME)
-	@echo "Cleaning Libft executable/library..."
-	make -C $(LIBFT_DIR) fclean || true
-	@echo "Cleaning MacroLibX executable/library..."
-	make -C $(MLX_DIR) fclean || true
-	@echo "Removing MacroLibX folder..."
-	$(RM) $(MLX_DIR)
+	@make -C $(LIBFT_DIR) fclean || true
+	@make -C $(FT_PRINTF_DIR) fclean || true
+	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) fclean || true; fi
 
 re: fclean all
 
