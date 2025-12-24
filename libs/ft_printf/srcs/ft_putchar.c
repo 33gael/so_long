@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gaeducas <gaeducas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 12:51:23 by zaak              #+#    #+#             */
-/*   Updated: 2025/12/20 12:53:31 by zaak             ###   ########.fr       */
+/*   Created: 2025/11/01 15:37:18 by gaeducas            #+#    #+#             */
+/*   Updated: 2025/11/04 11:03:50 by gaeducas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../ft_printf.h"
 
-int main(int ac, char **av)
+int	ft_putchar(int c)
 {
-    if (ac != 1)
-        return (0);
+	write(1, &c, 1);
+	return (1);
 }
