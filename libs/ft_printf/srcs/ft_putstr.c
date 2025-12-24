@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 12:51:23 by zaak              #+#    #+#             */
-/*   Updated: 2025/12/20 12:53:31 by zaak             ###   ########.fr       */
+/*   Created: 2025/11/01 15:39:30 by gaeducas          #+#    #+#             */
+/*   Updated: 2025/11/03 16:45:10 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../ft_printf.h"
 
-int main(int ac, char **av)
+int	ft_putstr(char *s)
 {
-    if (ac != 1)
-        return (0);
+	int	i;
+
+	i = 0;
+	if (!s)
+		s = "(null)";
+	while (s[i])
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
+	return (i);
 }
