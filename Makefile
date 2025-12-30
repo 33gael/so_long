@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gaeducas <gaeducas@student.fr>             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/12/30 12:37:17 by gaeducas          #+#    #+#              #
+#    Updated: 2025/12/30 13:00:18 by gaeducas         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 ## VARIABLES GÉNÉRALES
 CC              = cc
 CFLAGS          = -Wall -Wextra -Werror
@@ -8,78 +20,71 @@ RM              = rm -rf
 SRCS_FOLDER     = src/
 LIBS_FOLDER     = libs/
 INCLUDES_FOLDER = includes/
-OBJECTS_FOLDER  = objects/
+OBJECTS_FOLDER  = objects
 
-## SOUS-PROJETS (BIBLIOTHÈQUES)
+## BREW CONFIG (Pour Mac M2)
+BREW_PREFIX     = $(shell brew --prefix)
+INCLUDES_BREW  = -I$(BREW_PREFIX)/include
+LIBS_BREW      = -L$(BREW_PREFIX)/lib
+
+## BIBLIOTHÈQUES
 MLX_DIR         = $(LIBS_FOLDER)MacroLibX/
 LIBFT_DIR       = $(LIBS_FOLDER)libft/
-FT_PRINTF_DIR	= $(LIBS_FOLDER)ft_printf/
-MLX_HEADERS_DIR = $(MLX_DIR)includes/
+FT_PRINTF_DIR   = $(LIBS_FOLDER)ft_printf/
 
-# Fichiers compilés des bibliothèques [cite: 1, 2]
 LIBFT           = $(LIBFT_DIR)libft.a
-FT_PRINTF		= $(FT_PRINTF_DIR)libftprintf.a
-MLX             = $(MLX_DIR)libmlx.so
+FT_PRINTF       = $(FT_PRINTF_DIR)libftprintf.a
+MLX             = $(MLX_DIR)libmlx.dylib
+
+## FLAGS MLX POUR MAC
+MLX_FLAGS       = -L$(MLX_DIR) -lmlx -framework Cocoa -framework OpenGL -framework IOKit -lSDL2
 
 ## SOURCES ET OBJETS
-# Ajoute ici tes nouveaux fichiers .c au fur et à mesure
 SRCS            = $(SRCS_FOLDER)window.c \
-                  $(SRCS_FOLDER)so_long.c
+					$(SRCS_FOLDER)so_long.c
 
-# Transformation des chemins pour les objets [cite: 1]
-OBJS            = $(patsubst $(SRCS_FOLDER)%.c, $(OBJECTS_FOLDER)%.o, $(SRCS))
+# On génère la liste des objets
+OBJS            = $(SRCS:$(SRCS_FOLDER)%.c=$(OBJECTS_FOLDER)/%.o)
 
 ## RÈGLES PRINCIPALES
 all: $(NAME)
 
-# 1. LIEN FINAL (Correction : Ajout de FT_PRINTF et ordre des libs) 
 $(NAME): $(LIBFT) $(FT_PRINTF) $(MLX) $(OBJS)
 	@echo "Linking $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX) -lSDL2 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_PRINTF) $(LIBS_BREW) $(MLX_FLAGS) -o $(NAME)
+	@install_name_tool -change libmlx.dylib $(MLX) $(NAME)
 
-# 2. COMPILATION DES OBJETS (Correction : Ajout des -I pour les headers) 
-$(OBJECTS_FOLDER)%.o: $(SRCS_FOLDER)%.c | $(OBJECTS_FOLDER)
+# Règle de compilation des .o
+$(OBJECTS_FOLDER)/%.o: $(SRCS_FOLDER)%.c
+	@mkdir -p $(dir $@)
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) -I $(INCLUDES_FOLDER) -I $(MLX_HEADERS_DIR) -I $(LIBFT_DIR) -I $(FT_PRINTF_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES_BREW) -I $(INCLUDES_FOLDER) -I $(MLX_DIR)includes -I $(LIBFT_DIR) -I $(FT_PRINTF_DIR) -c $< -o $@
 
-# Création du dossier d'objets si inexistant 
-$(OBJECTS_FOLDER):
-	@mkdir -p $(OBJECTS_FOLDER)
-
-## 3. RÈGLES DES BIBLIOTHÈQUES
-
+## RÈGLES DES LIBS
 $(LIBFT):
-	@echo "Compiling Libft..."
 	@make -C $(LIBFT_DIR) all
 
 $(FT_PRINTF):
-	@echo "Compiling Ft_printf..."
 	@make -C $(FT_PRINTF_DIR) all
 
-$(MLX_DIR):
+$(MLX):
 	@if [ ! -d "$(MLX_DIR)" ]; then \
-		echo "Cloning MacroLibX..."; \
 		git clone https://github.com/seekrs/MacroLibX.git $(MLX_DIR); \
 	fi
-
-$(MLX): $(MLX_DIR)
-	@echo "Compiling MacroLibX..."
-	@make -C $(MLX_DIR) -j
-
+	@echo "Building MLX for Apple Silicon..."
+	@$(MAKE) -C $(MLX_DIR) UNUSE_VULKAN=1 FETCH_OPENGL=1
 ## NETTOYAGE
 clean:
-	@echo "Cleaning objects..."
 	$(RM) $(OBJECTS_FOLDER)
-	@make -C $(LIBFT_DIR) clean || true
-	@make -C $(FT_PRINTF_DIR) clean || true
-	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean || true; fi
+	@make -C $(LIBFT_DIR) clean
+	@make -C $(FT_PRINTF_DIR) clean
+	@make -C $(MLX_DIR) clean
 
 fclean: clean
-	@echo "Full cleaning..."
 	$(RM) $(NAME)
-	@make -C $(LIBFT_DIR) fclean || true
-	@make -C $(FT_PRINTF_DIR) fclean || true
-	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) fclean || true; fi
+	@make -C $(LIBFT_DIR) fclean
+	@make -C $(FT_PRINTF_DIR) fclean
+	@make -C $(MLX_DIR) fclean
 
 re: fclean all
 
