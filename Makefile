@@ -78,7 +78,7 @@ clean:
 
 fclean: clean
 	@echo "Full cleaning..."
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(MLX_DIR)
 	@make -C $(LIBFT_DIR) fclean || true
 	@make -C $(FT_PRINTF_DIR) fclean || true
 	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) fclean || true; fi
