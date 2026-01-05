@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gaeducas <gaeducas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/14 00:43:45 by gaeducas            #+#    #+#             */
-/*   Updated: 2026/01/05 11:33:02 by gaeducas           ###   ########.fr       */
+/*   Created: 2025/11/14 11:35:58 by gaeducas            #+#    #+#             */
+/*   Updated: 2025/11/16 10:43:47 by gaeducas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include "../libs/MacroLibX/includes/mlx.h"
-# include "../libs/ft_printf/ft_printf.h"
-# include "../libs/libft/libft.h"
 # include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct s_sprite
-{
-	int			p_collectibles;
-	int			p_player;
-	int			p_exit;
-}				t_sprite;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
 
-typedef struct s_data
-{
-	mlx_context	mlx;
-	mlx_window	win;
-	void		*img_wall;
-	char		**map;
-	int			width;
-	int			height;
-	int			moves;
-	int			pos_x;
-	int			pos_y;
-}				t_data;
+char	*get_next_line(int fd);
+size_t	ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(char *s, int c);
+char	*ft_strdup(char *src);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 
 #endif
