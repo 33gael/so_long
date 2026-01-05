@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:43:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2025/12/24 17:13:33 by zaak             ###   ########.fr       */
+/*   Updated: 2026/01/05 11:33:02 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 # define SO_LONG_H
 
 # include "../libs/MacroLibX/includes/mlx.h"
-# include "../libs/libft/libft.h"
 # include "../libs/ft_printf/ft_printf.h"
+# include "../libs/libft/libft.h"
 # include <fcntl.h>
+
+typedef struct s_sprite
+{
+	int			p_collectibles;
+	int			p_player;
+	int			p_exit;
+}				t_sprite;
 
 typedef struct s_data
 {
 	mlx_context	mlx;
 	mlx_window	win;
-    void    *img_wall;
+	void		*img_wall;
 	char		**map;
-	int width;  // Nombre de colonnes
-	int height; // Nombre de lignes
+	int			width;
+	int			height;
 	int			moves;
-	// Ajoute ici tes pointeurs d'images plus tard
+	int			pos_x;
+	int			pos_y;
 }				t_data;
-
-// Prototypes
-void			parse_map(t_data *data, char *map_path);
 
 #endif
