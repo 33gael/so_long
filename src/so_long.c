@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/05 11:26:11 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/05 12:01:04 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ void	window_hook(int event, void *param)
 		mlx_loop_end((mlx_context)param);
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
     t_data                  data;
     mlx_window_create_info  info;
+	(void) argv;
+	if (argc != 2)
+	{
+		ft_printf("Error\nUsage : ./so_long maps/(your map)");
+		return (1);
+	}
 	ft_memset(&info, 0, sizeof(mlx_window_create_info));
     ft_memset(&data, 0, sizeof(t_data));
     data.mlx = mlx_init();
