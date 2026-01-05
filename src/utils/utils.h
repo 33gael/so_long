@@ -1,13 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.c                                           :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 05:01:50 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/05 09:53:24 by gaeducas         ###   ########.fr       */
+/*   Created: 2026/01/05 12:45:15 by gaeducas          #+#    #+#             */
+/*   Updated: 2026/01/05 12:48:18 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#ifndef UTILS_H
+# define UTILS_H
+
+# include "../../includes/so_long.h"
+
+int	ft_main_utils(void);
+
+#endif
