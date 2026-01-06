@@ -6,49 +6,78 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 11:02:49 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/06 13:54:19 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/06 15:10:32 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int parse_map(char *filename, t_data *data)
+static void	ft_remove_newline(char *line)
 {
-    int     fd;
-    char    *line;
+	int	i;
 
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-        return (0); // Erreur d'ouverture
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\n')
+		{
+			line[i] = '\0';
+			return ;
+		}
+		i++;
+	}
+}
 
-    data->map.height = 0;
-    data->map.width = 0;
+static int	get_map_height(char *filename)
+{
+	int		fd;
+	int		height;
+	char	*line;
 
-    line = get_next_line(fd);
-    if (!line)
-        return (0); // Fichier vide
-    
-    // On définit la largeur de référence avec la première ligne
-    // Attention: GNL garde souvent le \n, pense à le gérer !
-    data->map.width = ft_strlen(line) - 1; // -1 pour ignorer le \n
-    
-    while (line)
-    {
-        // Vérification rectangulaire
-        if ((int)ft_strlen(line) - 1 != data->map.width && line[0] != '\n')
-        {
-            free(line);
-            // close(fd) + free tout le reste...
-            return (0); // Erreur: lignes de longueurs différentes
-        }
-        
-        // Ici, idéalement, tu ajoutes la ligne dans data->map.grid
-        // data->map.grid[data->map.height] = ft_strdup(line); (à faire avec un tableau dynamique)
-        
-        data->map.height++;
-        free(line);
-        line = get_next_line(fd);
-    }
-    close(fd);
-    return (1);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	height = 0;
+	while ((line = get_next_line(fd)))
+	{
+		height++;
+		free(line);
+	}
+	close(fd);
+	return (height);
+}
+
+int	ft_parse_map(char *filename, t_data *data)
+{
+	int		fd;
+	int		i;
+	char	*line;
+
+	// 1. Compter les lignes
+	data->map.height = get_map_height(filename);
+	if (data->map.height == 0)
+		return (0);
+
+	// 2. Allouer le tableau
+	data->map.grid = malloc(sizeof(char *) * (data->map.height + 1));
+	if (!data->map.grid)
+		return (0);
+
+	// 3. Remplir le tableau
+	fd = open(filename, O_RDONLY);
+	i = 0;
+	while ((line = get_next_line(fd)))
+	{
+		ft_remove_newline(line); // Important : on nettoie la ligne
+		data->map.grid[i] = line;
+		i++;
+	}
+	data->map.grid[i] = NULL;
+	close(fd);
+
+	// 4. Calculer la largeur (sur la 1ère ligne nettoyée)
+	if (data->map.height > 0)
+		data->map.width = gnl_strlen(data->map.grid[0]);
+	
+	return (1);
 }
