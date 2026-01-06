@@ -6,13 +6,13 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 11:35:53 by gaeducas          #+#    #+#             */
-/*   Updated: 2025/11/16 11:19:58 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:17:05 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	gnl_strlen(char *str)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strdup(char *src)
+char	*gnl_strdup(char *src)
 {
 	int		i;
 	char	*dest;
@@ -47,13 +47,13 @@ char	*ft_strdup(char *src)
 	return (dest);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*line;
 	int		i;
 	int		j;
 
-	line = malloc((sizeof(char) * ((ft_strlen(s1) + 1) + ft_strlen(s2))));
+	line = malloc((sizeof(char) * ((gnl_strlen(s1) + 1) + gnl_strlen(s2))));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -72,7 +72,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (line);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*gnl_strchr(char *s, int c)
 {
 	int	i;
 
@@ -90,14 +90,14 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*gnl_substr(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*sub;
 
-	if (start >= ft_strlen(s))
+	if (start >= gnl_strlen(s))
 	{
-		sub = ft_strdup("");
+		sub = gnl_strdup("");
 		return (sub);
 	}
 	if (!s)
@@ -105,8 +105,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	if (s[i] == '\0')
 		return (NULL);
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
+	if (len > gnl_strlen(s) - start)
+		len = gnl_strlen(s) - start;
 	sub = malloc(sizeof(char) * (len + 1));
 	if (!sub)
 		return (NULL);

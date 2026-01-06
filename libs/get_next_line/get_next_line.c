@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 11:35:56 by gaeducas          #+#    #+#             */
-/*   Updated: 2025/11/16 15:04:46 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:06:58 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*ft_extract_line(char *stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	line = ft_substr(stash, 0, i + 1);
+	line = gnl_substr(stash, 0, i + 1);
 	return (line);
 }
 
@@ -36,7 +36,7 @@ static char	*ft_update_size(char *stash)
 		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	line = ft_substr(stash, i + 1, ft_strlen(stash) - (i + 1));
+	line = gnl_substr(stash, i + 1, gnl_strlen(stash) - (i + 1));
 	if (!line)
 	{
 		free(stash);
@@ -56,7 +56,7 @@ static char	*ft_read_loop(int fd, char **stash)
 	if (!buff)
 		return (free(*stash), NULL);
 	read_bytes = 1;
-	while (!stash || (read_bytes > 0 && ft_strchr(*stash, '\n') == NULL))
+	while (!stash || (read_bytes > 0 && gnl_strchr(*stash, '\n') == NULL))
 	{
 		read_bytes = read(fd, buff, BUFFER_SIZE);
 		if (read_bytes == -1)
@@ -65,7 +65,7 @@ static char	*ft_read_loop(int fd, char **stash)
 			break ;
 		buff[read_bytes] = '\0';
 		tmp = *stash;
-		*stash = ft_strjoin(tmp, buff);
+		*stash = gnl_strjoin(tmp, buff);
 		free(tmp);
 		if (!*stash)
 			return (free(buff), NULL);

@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/06 13:52:47 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:10:55 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	window_hook(int event, void *param)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	(void)argv;
 
 	if (argc != 2)
 	{

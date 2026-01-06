@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:43:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/06 13:41:34 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:10:09 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ typedef struct s_data
 void		key_hook(int key, void *param);
 void		window_hook(int event, void *param);
 int			parse_map(char *filename, t_data *data);
+
+void		ft_start_game(t_data *data);
+int			ft_init_window(t_data *data);
 
 #endif
