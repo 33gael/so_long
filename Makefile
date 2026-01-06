@@ -27,6 +27,9 @@ MLX             = $(MLX_DIR)libmlx.so
 # Ajoute ici tes nouveaux fichiers .c au fur et à mesure
 SRCS            = $(SRCS_FOLDER)so_long.c \
 					$(UTILS_FOLDER)utils_win.c \
+					$(SRCS_FOLDER)map_parsing.c \
+					$(SRCS_FOLDER)init_img.c \
+					$(SRCS_FOLDER)render_map.c \
 
 # Transformation des chemins pour les objets [cite: 1]
 OBJS            = $(patsubst $(SRCS_FOLDER)%.c $(UTILS_FOLDER)%.c, $(OBJECTS_FOLDER)%.o, $(SRCS))
