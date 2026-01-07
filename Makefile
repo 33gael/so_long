@@ -31,6 +31,7 @@ SRCS            = $(SRCS_FOLDER)so_long.c \
 					$(SRCS_FOLDER)init_img.c \
 					$(SRCS_FOLDER)render_map.c \
 					$(SRCS_FOLDER)moves.c \
+					$(SRCS_FOLDER)map_check.c \
 
 # Transformation des chemins pour les objets [cite: 1]
 OBJS            = $(patsubst $(SRCS_FOLDER)%.c $(UTILS_FOLDER)%.c, $(OBJECTS_FOLDER)%.o, $(SRCS))

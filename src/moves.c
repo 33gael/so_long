@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:39:36 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/07 15:56:23 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:06:20 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_move_player(t_data *data, int dx, int dy)
 			data->map.grid[y][x] = '0';
 		data->map.grid[new_y][new_x] = 'P';
 		data->moves++;
-		ft_printf("Mouvements : %d\n", data->moves);
+		ft_printf("Move : %d\n", data->moves);
 		ft_render_map(data);
 	}
 }
