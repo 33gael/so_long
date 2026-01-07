@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:12:08 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/07 11:35:28 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:04:03 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_render_map(t_data *data)
 	int		y;
 	void	*img;
 
+	mlx_clear_window(data->mlx, data->win, (mlx_color){0});
 	y = 0;
 	while (y < data->map.height)
 	{
@@ -25,6 +26,7 @@ void	ft_render_map(t_data *data)
 		while (x < data->map.width)
 		{
 			mlx_put_image_to_window(data->mlx, data->win, data->img_floor, x * 64, y * 64);
+			img = NULL;
 			if (data->map.grid[y][x] == '1')
 				img = data->img_wall;
 			else if (data->map.grid[y][x] == 'C')
@@ -33,8 +35,6 @@ void	ft_render_map(t_data *data)
 				img = data->img_exit;
 			else if (data->map.grid[y][x] == 'P')
 				img = data->img_player;
-			else
-				img = data->img_floor;
 			if (img)
 				mlx_put_image_to_window(data->mlx, data->win, img, x * 64, y * 64);
 			x++;

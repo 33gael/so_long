@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:17:10 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/07 11:25:21 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:35:40 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	*load_img(t_data *data, char *path)
 
 void	ft_init_images(t_data *data)
 {
-	data->img_wall = load_img(data, "textures/wall.png");
-	data->img_floor = load_img(data, "textures/floor1.png");
+	data->img_wall = load_img(data, "textures/wall1.png");
+	data->img_floor = load_img(data, "textures/floor.png");
 	data->img_player = load_img(data, "textures/player1.png");
 	data->img_collectible = load_img(data, "textures/collectible1.png");
-	data->img_exit = load_img(data, "textures/exit.png");
+	data->img_exit = load_img(data, "textures/exit1.png");
 }
