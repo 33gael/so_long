@@ -6,7 +6,7 @@
 /*   By: hazmat <hazmat@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:43:45 by hazmat            #+#    #+#             */
-/*   Updated: 2026/01/07 16:02:59 by hazmat           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:15:09 by hazmat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void		ft_count_items(t_data *data);
 void		ft_move_player(t_data *data, int dx, int dy);
 void		ft_destroy_images(t_data *data);
 void		ft_free_map(t_data *data);
+int			ft_check_map_validity(t_data *data);
 
 #endif
