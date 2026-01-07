@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/06 15:21:54 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/07 11:11:11 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,12 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (1);
 	ft_memset(&data, 0, sizeof(t_data));
-
 	if (!ft_parse_map(argv[1], &data))
 		return (1);
-
 	if (ft_init_window(&data) != 0)
 		return (1);
-
-	// 1. CHARGEMENT DES IMAGES (Une seule fois !)
 	ft_init_images(&data);
-
-	// 2. PREMIER AFFICHAGE (Pour ne pas avoir un écran noir au début)
 	ft_render_map(&data);
-
 	ft_start_game(&data);
 	return (0);
 }
