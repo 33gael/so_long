@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/08 10:04:36 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 11:12:28 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	key_hook(int key, void *param)
 	t_data	*data;
 
 	data = (t_data *)param;
-	ft_printf("Pressed Key : %d\n", key);
 	if (key == 41)
 		mlx_loop_end(data->mlx);
 	else if (key == 26)
