@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_img.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:17:10 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 11:37:06 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:57:00 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*load_img(t_data *data, char *path)
 	img = mlx_new_image_from_file(data->mlx, path, &w, &h);
 	if (!img)
 	{
-		ft_printf("Error\nImpossible to load image : %s\n", path);
+		ft_putstr_fd("Error\nImpossible to load image", 2);
 		exit(1);
 	}
 	return (img);

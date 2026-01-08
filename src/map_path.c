@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 14:12:01 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 14:42:56 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 21:03:38 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ int	ft_check_path_validity(t_data *data)
 	valid = check_accessibility(temp, data);
 	free_temp_grid(temp, data->map.height);
 	if (!valid)
-		ft_printf("Error\nPath invalid: Collectibles or Exit unreachable.\n");
+		ft_putstr_fd("Error\nCollectibles or Exit unreachable.\n", 2);
 	return (valid);
 }

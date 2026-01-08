@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/08 14:59:30 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 20:03:25 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	ft_load_map(t_data *data, char *path)
 	len = ft_strlen(path);
 	if (len < 4 || ft_strncmp(path + len - 4, ".ber", 4) != 0)
 	{
-		ft_printf("Error\nInvalid file extension (.ber)\n");
+		ft_putstr_fd("Error\nInvalid file extension (.ber)\n", 2);
 		return (0);
 	}
 	if (!ft_parse_map(path, data))
 	{
-		ft_printf("Error\nImpossible to read map\n");
+		ft_putstr_fd("Error\nImpossible to read map\n", 2);
 		return (0);
 	}
 	ft_count_items(data);
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Error\nUsage: ./so_long maps/(Your map.ber)\n");
+		ft_putstr_fd("Error\nUsage: ./so_long maps/(Your map.ber)\n", 2);
 		return (1);
 	}
 	ft_memset(&data, 0, sizeof(t_data));

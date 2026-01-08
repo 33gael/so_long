@@ -100,7 +100,7 @@ run_test() {
 
     # Exécution avec Valgrind
     # On redirige stdout ET stderr
-    valgrind --leak-check=full --show-leak-kinds=all --suppressions=/home/gaeducas/Documents/Github/so_long/libs/MacroLibX/valgrind.supp --track-origins=yes $PROG $CMD_ARGS > "$OUT_FILE" 2> "$LOG_FILE"
+    valgrind --leak-check=full --show-leak-kinds=all --suppressions=/home/zaak/Documents/Code/42/so_long/libs/MacroLibX/valgrind.supp --track-origins=yes $PROG $CMD_ARGS > "$OUT_FILE" 2> "$LOG_FILE"
     RET=$?
     
     # Analyse du résultat (Sans lire dans une variable bash pour éviter les null bytes)

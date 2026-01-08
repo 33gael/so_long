@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:39:36 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 10:04:39 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:56:44 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static int	check_move(t_data *data, int new_x, int new_y)
 	{
 		if (data->map.c_count == 0)
 		{
-			ft_printf("Congratulation ! You won in %d moves !\n", data->moves
-				+ 1);
 			mlx_loop_end(data->mlx);
 			return (1);
 		}

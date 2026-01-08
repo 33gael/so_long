@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:43:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 14:16:26 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 20:53:02 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include "../libs/libft/libft.h"
 # include "../src/utils/utils.h"
 # include <fcntl.h>
+
+# define MAX_WIDTH 30
+# define MAX_HEIGHT 16
 
 typedef struct s_map
 {

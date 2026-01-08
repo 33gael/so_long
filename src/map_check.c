@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:11:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 15:12:57 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 21:08:32 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+static int	check_screen_size(t_data *data)
+{
+	if (data->map.width > MAX_WIDTH)
+	{
+		ft_putstr_fd("Error\nMap is too wide for the screen.\n", 2);
+		return (0);
+	}
+	if (data->map.height > MAX_HEIGHT)
+	{
+		ft_putstr_fd("Error\nMap is too high for the screen.\n", 2);
+		return (0);
+	}
+	return (1);
+}
 
 static int	check_rectangular(t_data *data)
 {
@@ -53,17 +68,18 @@ static int	check_counts(t_data *data)
 {
 	if (data->map.p_count != 1)
 	{
-		ft_printf("Error\nThe map must contain exactly 1 Player (P).\n");
+		ft_putstr_fd("Error\nThe map must contain exactly 1 Player (P).\n", 2);
 		return (0);
 	}
 	if (data->map.e_count != 1)
 	{
-		ft_printf("Error\nThe map must contain exactly 1 Exit (E).\n");
+		ft_putstr_fd("Error\nThe map must contain exactly 1 Exit (E).\n", 2);
 		return (0);
 	}
 	if (data->map.c_count < 1)
 	{
-		ft_printf("Error\nThe map must contain at least 1 Collectible (C).\n");
+		ft_putstr_fd("Error\nThe map must contain at least 1 Collectible (C)."
+			"\n", 2);
 		return (0);
 	}
 	return (1);
@@ -71,14 +87,16 @@ static int	check_counts(t_data *data)
 
 int	ft_check_map_validity(t_data *data)
 {
+	if (!check_screen_size(data))
+		return (0);
 	if (!check_rectangular(data))
 	{
-		ft_printf("Error\nThe map is not rectangular");
+		ft_putstr_fd("Error\nThe map is not rectangular\n", 2);
 		return (0);
 	}
 	if (!check_walls(data))
 	{
-		ft_printf("Error\nThe map is not surrounded by walls (1).\n");
+		ft_putstr_fd("Error\nThe map is not surrounded by walls (1).\n", 2);
 		return (0);
 	}
 	if (!check_counts(data))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaak <zaak@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:12:08 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 10:04:37 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 21:04:32 by zaak             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,25 @@
 static void	put_img_to_window(t_data *data, int x, int y)
 {
 	void	*img;
+	char	c;
 
+	c = data->map.grid[y][x];
+	img = NULL;
+	if (c != '0' && c != '1' && c != 'E' && c != 'P' && c != 'C')
+	{
+		ft_putstr_fd("Error\nYou can only use this characters [0, 1, E, P,"
+			"C]\n", 2);
+		exit(1);
+	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img_floor, x * 64, y
 		* 64);
-	img = NULL;
 	if (data->map.grid[y][x] == '1')
 		img = data->img_wall;
-	else if (data->map.grid[y][x] == 'C')
+	else if (c == 'C')
 		img = data->img_collectible;
-	else if (data->map.grid[y][x] == 'E')
+	else if (c == 'E')
 		img = data->img_exit;
-	else if (data->map.grid[y][x] == 'P')
+	else if (c == 'P')
 		img = data->img_player;
 	if (img)
 		mlx_put_image_to_window(data->mlx, data->win, img, x * 64, y * 64);
