@@ -6,11 +6,35 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/07 16:21:36 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 10:04:36 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+static int	ft_load_map(t_data *data, char *path)
+{
+	size_t	len;
+
+	len = ft_strlen(path);
+	if (len < 4 || ft_strncmp(path + len - 4, ".ber", 4) != 0)
+	{
+		ft_printf("Error\nInvalid file extension (.ber)\n");
+		return (0);
+	}
+	if (!ft_parse_map(path, data))
+	{
+		ft_printf("Error\nImpossible to read map\n");
+		return (0);
+	}
+	ft_count_items(data);
+	if (!ft_check_map_validity(data))
+	{
+		ft_free_map(data);
+		return (0);
+	}
+	return (1);
+}
 
 void	key_hook(int key, void *param)
 {
@@ -44,19 +68,13 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		return (ft_printf("Error\nUsage: ./so_long maps/map.ber\n"), 1);
+	{
+		ft_printf("Error\nUsage: ./so_long maps/(Your map.ber)\n");
+		return (1);
+	}
 	ft_memset(&data, 0, sizeof(t_data));
-	if (!ft_parse_map(argv[1], &data))
-	{
-		ft_printf("Error\nImpossible to load the map\n");
+	if (!ft_load_map(&data, argv[1]))
 		return (1);
-	}
-	ft_count_items(&data);
-	if (!ft_check_map_validity(&data))
-	{
-		ft_free_map(&data);
-		return (1);
-	}
 	if (ft_init_window(&data) != 0)
 	{
 		ft_free_map(&data);
