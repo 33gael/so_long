@@ -6,11 +6,25 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:11:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/08 10:04:40 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:12:57 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+static int	check_rectangular(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->map.grid[i])
+	{
+		if (ft_strlen(data->map.grid[i]) != (size_t)data->map.width)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static int	check_walls(t_data *data)
 {
@@ -57,6 +71,11 @@ static int	check_counts(t_data *data)
 
 int	ft_check_map_validity(t_data *data)
 {
+	if (!check_rectangular(data))
+	{
+		ft_printf("Error\nThe map is not rectangular");
+		return (0);
+	}
 	if (!check_walls(data))
 	{
 		ft_printf("Error\nThe map is not surrounded by walls (1).\n");

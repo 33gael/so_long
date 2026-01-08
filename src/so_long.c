@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 15:24:42 by zaak              #+#    #+#             */
-/*   Updated: 2026/01/08 11:12:28 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 14:59:30 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static int	ft_load_map(t_data *data, char *path)
 	}
 	ft_count_items(data);
 	if (!ft_check_map_validity(data))
+	{
+		ft_free_map(data);
+		return (0);
+	}
+	if (!ft_check_path_validity(data))
 	{
 		ft_free_map(data);
 		return (0);
