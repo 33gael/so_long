@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 11:02:49 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/07 15:52:06 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/08 09:23:35 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ static int	get_map_height(char *filename)
 	if (fd < 0)
 		return (0);
 	height = 0;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		height++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (height);
@@ -53,35 +55,45 @@ int	ft_parse_map(char *filename, t_data *data)
 	int		i;
 	char	*line;
 
-	// 1. Compter les lignes
 	data->map.height = get_map_height(filename);
 	if (data->map.height == 0)
 		return (0);
-	// 2. Allouer le tableau
 	data->map.grid = malloc(sizeof(char *) * (data->map.height + 1));
 	if (!data->map.grid)
 		return (0);
-	// 3. Remplir le tableau
 	fd = open(filename, O_RDONLY);
 	i = 0;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
-		ft_remove_newline(line); // Important : on nettoie la ligne
-		data->map.grid[i] = line;
-		i++;
+		ft_remove_newline(line);
+		data->map.grid[i++] = line;
+		line = get_next_line(fd);
 	}
 	data->map.grid[i] = NULL;
 	close(fd);
-	// 4. Calculer la largeur (sur la 1ère ligne nettoyée)
-	if (data->map.height > 0)
-		data->map.width = gnl_strlen(data->map.grid[0]);
+	data->map.width = gnl_strlen(data->map.grid[0]);
 	return (1);
+}
+
+static void	check_cell(t_data *data, int y, int x)
+{
+	if (data->map.grid[y][x] == 'C')
+		data->map.c_count++;
+	else if (data->map.grid[y][x] == 'P')
+		data->map.p_count++;
+	else if (data->map.grid[y][x] == 'E')
+	{
+		data->map.e_count++;
+		data->map.exit_x = x;
+		data->map.exit_y = y;
+	}
 }
 
 void	ft_count_items(t_data *data)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	data->map.c_count = 0;
@@ -92,16 +104,7 @@ void	ft_count_items(t_data *data)
 		x = 0;
 		while (data->map.grid[y][x])
 		{
-			if (data->map.grid[y][x] == 'C')
-				data->map.c_count++;
-			else if (data->map.grid[y][x] == 'P')
-				data->map.p_count++;
-			else if (data->map.grid[y][x] == 'E')
-			{
-				data->map.e_count++;
-				data->map.exit_x = x;
-				data->map.exit_y = y;
-			}
+			check_cell(data, y, x);
 			x++;
 		}
 		y++;
