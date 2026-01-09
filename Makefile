@@ -27,6 +27,7 @@ SRCS            = $(SRCS_FOLDER)so_long.c \
 					$(SRCS_FOLDER)moves.c \
 					$(SRCS_FOLDER)map_check.c \
 					$(SRCS_FOLDER)map_path.c \
+					$(SRCS_FOLDER)map_check_2.c \
 
 OBJS            = $(patsubst $(SRCS_FOLDER)%.c $(UTILS_FOLDER)%.c, $(OBJECTS_FOLDER)%.o, $(SRCS))
 
