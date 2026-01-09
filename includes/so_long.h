@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 00:43:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/09 15:03:27 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:32:17 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void		ft_destroy_images(t_data *data);
 void		ft_free_map(t_data *data);
 int			ft_check_map_validity(t_data *data);
 int			ft_check_path_validity(t_data *data);
+int			ft_check_chars_validity(t_data *data);
 
 #endif

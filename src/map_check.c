@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:11:45 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/09 15:03:18 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:34:15 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ static int	check_counts(t_data *data)
 
 int	ft_check_map_validity(t_data *data)
 {
+	if (!ft_check_chars_validity(data))
+		return (0);
 	if (!check_screen_size(data))
 		return (0);
 	if (!check_rectangular(data))

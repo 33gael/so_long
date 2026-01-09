@@ -6,7 +6,7 @@
 /*   By: gaeducas <gaeducas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 15:12:08 by gaeducas          #+#    #+#             */
-/*   Updated: 2026/01/09 15:03:22 by gaeducas         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:35:22 by gaeducas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ static void	put_img_to_window(t_data *data, int x, int y)
 
 	c = data->map.grid[y][x];
 	img = NULL;
-	if (c != '0' && c != '1' && c != 'E' && c != 'P' && c != 'C')
-	{
-		ft_putstr_fd("Error\nYou can only use this characters [0, 1, E, P,"
-			"C]\n", 2);
-		exit(1);
-	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img_floor, x * 64, y
 		* 64);
 	if (data->map.grid[y][x] == '1')
